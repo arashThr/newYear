@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Title of the document</title>
+    <style type="text/css">
+        body {
+            background-image: url(bg.jpg);
+            color: wheat;
+            font-family: 'Indie Flower', cursive;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+</head>
+
+<body>
+    <p id="hint">Give it a second!</p>
+    <pre id="man"></pre>
+    <p id="text" style="position:absolute;">That thing</p>
+</body>
+
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script>
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        window.location = 'goDesktop.html';
+    }
+
+    let target = document.getElementById('text');
+
+    let oldMx, oldMy;
+    let isGettingCloser = false;
+
+    let interval = setInterval(() => {
+        if (isMouseIn && oldMx === mx && oldMy === my && !isGettingCloser) {
+            isGettingCloser = true;
+            //gotoMouse();
+            getCloser();
+        } else {
+            oldMx = mx;
+            oldMy = my;
+        }
+    }, 1000);
+
+    function gotoMouse() {
+        console.log('Goto !');
+        $('#text').css({
+            top: my,
+            left: mx
+        });
+    }
+
+    let mx, my;
+    let closerInterval;
+    let isMouseIn = true;
+    let speedLimitter = 10;
+    let counter = 0;
+    let = walkingIndex = 0;
+
+    function getCloser() {
+        closerInterval = setInterval(() => {
+
+            counter += 1;
+
+            if (counter % speedLimitter !== 0)
+                return;
+
+            if (counter % 10 === 0) {
+                if (speedLimitter > 1)
+                    speedLimitter -= 1;
+                counter = 0;
+            }
+
+            let {
+                top, left
+            } = $('#text').offset();
+
+            let newX, newY;
+            // console.log(`${left} -> ${mx}, ${top} -> ${my}`);
+            if (Math.abs(left - mx) > 5) {
+                newX = left > mx ? (left - 2) : (left + 2);
+            }
+            if (Math.abs(top - my) > 5) {
+                newY = top > my ? (top - 1) : (top + 1);
+            }
+
+            if (!newX && !newY) {
+                alert("I hope you've learned your lesson ...");
+                window.location = 'happyNewYear.html'
+            } else {
+                $('#text').offset({
+                    top: Number(newY),
+                    left: Number(newX),
+                    position: 'absolute'
+                });
+            }
+        }, 20);
+    }
+
+
+    $(document).on("mousemove", function (event) {
+        isGettingCloser = false;
+        isMouseIn = true;
+        clearInterval(closerInterval);
+        speedLimitter = 10;
+
+        let {
+            top, left
+        } = $('#text').offset();
+
+        mx = event.pageX;
+        my = event.pageY;
+
+
+        let man = $('#man');
+        man.text(walking[walkingIndex])
+        man.offset({
+            top: my,
+            left: mx
+        });
+        walkingIndex = (walkingIndex + 1) % 4;
+
+
+        let distance = Math.sqrt(
+            Math.pow(mx - left, 2) +
+            Math.pow(my - top, 2));
+
+        if (distance < 50) {
+            let height = window.innerHeight;
+            let width = window.innerWidth;
+
+            let y = Math.floor(Math.random() * height % (height - 30));
+            let x = Math.floor(Math.random() * width % (width - 30));
+
+            $('#text').css({
+                top: y,
+                left: x
+            });
+        }
+    });
+
+    let m1 =
+        `(0_o)
+/[-]\\
+ / /`;
+
+    let m2 =
+        `(O_o)
+/[-]\\
+ \\ \\`;
+
+    let m3 =
+        `(o_O)
+/[-]\\
+ / /`;
+
+    let m4 =
+        `(o_0)
+/[-]\\
+ \\ \\`;
+
+    let walking = [m1, m2, m3, m4];
+
+    setInterval(() => {
+        let height = window.innerHeight;
+        let width = window.innerWidth;
+
+        let y = Math.floor(Math.random() * height % (height - 30));
+        let x = Math.floor(Math.random() * width % (width - 30));
+
+        if (!isGettingCloser) {
+            setTimeout(() => {
+                $('#hint').offset({
+                    top: y,
+                    left: x
+                });
+                $('#hint').hide();
+
+            }, 800);
+            $('#hint').show();
+        }
+    }, 5000)
+
+    window.onload = function () {
+        $('#hint').hide();
+
+        window.onmouseout = function () {
+            clearInterval(closerInterval);
+            console.log('OUT');
+            isMouseIn = false;
+        }
+    }
+</script>
+
+</html>

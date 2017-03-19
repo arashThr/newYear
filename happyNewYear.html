@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>سال نو مبارک</title>
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+    <style type="text/css">
+        body {
+            background-image: url(hipp.jpg);
+            background-repeat: no-repeat;
+            color: wheat;
+            font-family: 'Indie Flower', cursive;
+        }
+        
+        img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <center style="margin-top: 50px;">
+        <h2>Happy new year!</h2>
+        <p>Hope you can get on with your life</p>
+        <p><a href="https://markmanson.net/not-giving-a-fuck">*</a></p>
+        <pre id="man"></pre>
+        <small id="mobile"></small>
+    </center>
+
+</body>
+
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script>
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        $('#mobile').text('Please use desktop to see full version');
+    }
+    
+    let m1 =
+        `(0_o)
+/[-]\\
+ / \\`;
+
+    let m2 =
+        `(O_o)
+/[-]/
+ \\ \\`;
+
+    let m3 =
+        `(o_O)
+\\[-]\\
+ / /`;
+
+    let m4 =
+        `(o_0)
+\\[-]/
+ \\ \\`;
+
+    let walking = [m1, m2, m3, m4];
+    let walkingIndex = 0;
+
+    setInterval(() => {
+        $("#man").text(walking[walkingIndex])
+        walkingIndex = (walkingIndex + 1) % 4;
+    }, 500)
+</script>
+
+</html>
