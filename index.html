@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <p id="hint">Give it a second!</p>
+    <p id="hint">Wait!</p>
     <pre id="man"></pre>
     <p id="text" style="position:absolute;">Goals</p>
 </body>
@@ -27,6 +27,7 @@
 
     let oldMx, oldMy;
     let isGettingCloser = false;
+    let printed = false;
 
     let interval = setInterval(() => {
         if (isMouseIn && oldMx === mx && oldMy === my && !isGettingCloser) {
@@ -81,8 +82,9 @@
                 newY = top > my ? (top - 1) : (top + 1);
             }
 
-            if (!newX && !newY) {
-                alert("I hope you've learned your lesson ...");
+            if (!newX && !newY && !printed) {
+                printed = true;
+                alert("Yeah! that's about it ...");
                 window.location = 'happyNewYear.html'
             } else {
                 $('#text').offset({
@@ -173,10 +175,10 @@
                 });
                 $('#hint').hide();
 
-            }, 800);
+            }, 1000);
             $('#hint').show();
         }
-    }, 5000)
+    }, 4000)
 
     window.onload = function () {
         $('#hint').hide();
