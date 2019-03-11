@@ -165,7 +165,7 @@ body {
 @media (min-width: 768px) {
   .pop-up {
     width: calc(100% - 40px);
-    height: auto;
+/*     height: auto; */
     max-width: 900px;
   }
 }
